@@ -1,4 +1,4 @@
-reference;disbursed_amount;commission_fee;penalty_fee_sum;order_count;start_date;end_date,;new_month
+reference;disbursed_amount;commission_fee;penalty_fee_sum;order_count;start_date;end_date;new_month
 padberg_group;1000.0;9.52;0.0;5;2023-02-01;2023-02-01;false
 padberg_group;1208.65;10.62;0.0;5;2023-02-02;2023-02-02;false
 padberg_group;1201.01;10.47;9.39;5;2023-03-04;2023-03-04;true

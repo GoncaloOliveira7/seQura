@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 require 'csv'
 require 'models/orders'
 require 'models/merchants'
 require 'models/disbursements'
-require 'debug'
 
+# add comment
 class CreateDisbursementReportService
-  HEADERS = %w[reference disbursed_amount commission_fee penalty_fee_sum order_count start_date end_date, new_month].freeze
+  HEADERS = %w[reference disbursed_amount commission_fee penalty_fee_sum order_count start_date end_date
+               new_month].freeze
 
   attr_accessor :order
 
@@ -19,6 +22,7 @@ class CreateDisbursementReportService
   end
 
   def perform
+    puts 'Create Disbursement Report Service Started!'
     first_iteration = true
     CSV.foreach(@order_path, col_sep: ';', headers: true) do |order_row|
       @order = Order.new(order_row)
@@ -47,8 +51,10 @@ class CreateDisbursementReportService
       @monthly_commission_fee += @order.calculate_commission_fee
     end
 
-    add_disbursement if @disbursement.order_count > 0
+    add_disbursement if @disbursement.order_count.positive?
+
     @disbursements.close
+    puts 'Create Disbursement Report Service Finished!'
   end
 
   private

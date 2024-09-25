@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'services/create_disbursement_report_service'
 require 'minitest/autorun'
 

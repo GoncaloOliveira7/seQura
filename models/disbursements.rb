@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# coment
 class Disbursement
   attr_reader :start_date, :end_date, :commission_fee, :disbursed_amount, :order_count
 
@@ -57,15 +60,16 @@ class Disbursement
     @start_date = if @merchant.live_on.wday == order.created_at.wday
                     order.created_at
                   else
-                    prior_weekday(order, Date::DAYNAMES[@merchant.live_on.wday])
+                    prior_weekday(order)
                   end
 
     @end_date = @start_date + 6
   end
 
-  def prior_weekday(order, weekday)
-    weekday_index = Date::DAYNAMES.reverse.index(weekday)
-    days_before = (order.created_at.wday + weekday_index) % 7 + 1
+  def prior_weekday(order)
+    days_before = (order.created_at.wday + (7 - @merchant.live_on.wday)) % 7
     order.created_at - days_before
   end
 end
+
+

@@ -1,10 +1,10 @@
-reference;disbursed_amount;commission_fee;penalty_fee_sum;order_count;start_date;end_date,;new_month
+reference;disbursed_amount;commission_fee;penalty_fee_sum;order_count;start_date;end_date;new_month
 padberg_group;1000.0;9.52;0.0;5;2023-02-01;2023-02-01;false
 padberg_group;1208.65;10.62;0.0;5;2023-02-02;2023-02-02;false
-padberg_group;1201.01;10.47;70.61;5;2023-03-04;2023-03-04;true
-padberg_group;1609.76;13.75;53.75;5;2023-04-06;2023-04-06;true
-padberg_group;655.4;6.23;46.23;5;2023-08-08;2023-08-08;true
+padberg_group;1201.01;10.47;9.39;5;2023-03-04;2023-03-04;true
+padberg_group;1609.76;13.75;26.25;5;2023-04-06;2023-04-06;true
+padberg_group;655.4;6.23;33.77;5;2023-08-08;2023-08-08;true
 rosenbaum_parisian;1798.67;15.82;0.0;5;2023-09-09;2023-09-09;true
-rosenbaum_parisian;430.59;4.12;19.12;7;2022-11-09;2022-11-15;true
+rosenbaum_parisian;430.59;4.12;10.88;7;2022-11-09;2022-11-15;true
 rosenbaum_parisian;540.95;5.14;0.0;7;2022-11-16;2022-11-22;false
-rosenbaum_parisian;348.25;3.37;23.51;7;2022-12-07;2022-12-13;true
+rosenbaum_parisian;348.25;3.37;6.49;7;2022-12-07;2022-12-13;true

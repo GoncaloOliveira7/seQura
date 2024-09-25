@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require 'bigdecimal'
 
+# EXPLANAITION
 class Order
   attr_accessor :id, :merchant_reference, :created_at
 

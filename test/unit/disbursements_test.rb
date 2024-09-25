@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 $LOAD_PATH.unshift(File.expand_path('..', __dir__))
 
 require 'models/disbursements'
 require 'minitest/autorun'
-require "ostruct"
+require 'ostruct'
 
 describe Disbursement do
   describe 'calculate_disbursement_range' do
@@ -70,7 +72,6 @@ describe Disbursement do
           'minimum_monthly_fee' => 0
         }))
         order = OpenStruct.new({ created_at: Date.parse('2024-09-24') })
-
         expect { subject.calculate_disbursement_range(order) }.must_raise ArgumentError
       end
     end
