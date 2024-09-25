@@ -1,5 +1,7 @@
 class Disbursement
-  attr_reader :merchant, :start_date, :end_date, :commission_fee, :disbursed_amount, :order_count
+  attr_reader :start_date, :end_date, :commission_fee, :disbursed_amount, :order_count
+
+  attr_accessor :merchant
 
   def initialize(merchant)
     @merchant = merchant
@@ -12,13 +14,15 @@ class Disbursement
     if @merchant.disbursement_frequency == 'DAILY'
       @start_date = order.created_at
       @end_date = order.created_at
-    else
+    elsif @merchant.disbursement_frequency == 'WEEKLY'
       calculate_disbursement_weekly_range(order)
+    else
+      raise ArgumentError.new("Expected disbursement_frequency to be [DAILY, WEEKLY]: #{@merchant.disbursement_frequency}")
     end
   end
 
   def order_invalid?(order)
-    @start_date <= order.created_at && @end_date >= order.created_at
+    order.created_at > @end_date || order.created_at < @start_date
   end
 
   def add_order(order)
@@ -28,22 +32,23 @@ class Disbursement
     @order_count += 1
   end
 
-  def create_csv_row(monthly_commission_fee)
+  def create_csv_row(penalty_fee, start_of_the_month)
     [
       @merchant.reference,
       @disbursed_amount.to_f,
       @commission_fee.to_f,
-      monthly_commission_fee.to_f,
+      penalty_fee.to_f,
       @order_count,
       @start_date,
-      @end_date
+      @end_date,
+      start_of_the_month
     ]
   end
 
-  def calculate_penalty_fee(monthly_commission_fee)
-    return 0 if monthly_commission_fee > @merchant.minimum_monthly_fee
+  def calculate_penalty_fee(total_commission_fee)
+    return 0 if total_commission_fee > @merchant.minimum_monthly_fee
 
-    (monthly_commission_fee - @merchant.minimum_monthly_fee).round(2)
+    (@merchant.minimum_monthly_fee - total_commission_fee).round(2)
   end
 
   private
@@ -55,7 +60,7 @@ class Disbursement
                     prior_weekday(order, Date::DAYNAMES[@merchant.live_on.wday])
                   end
 
-    @end_date = disbursement_start + 6
+    @end_date = @start_date + 6
   end
 
   def prior_weekday(order, weekday)

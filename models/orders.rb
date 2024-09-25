@@ -1,5 +1,9 @@
+require 'bigdecimal'
+
 class Order
-  attr_reader :id, :merchant_reference, :amount, :created_at
+  attr_accessor :id, :merchant_reference, :created_at
+
+  attr_reader :amount
 
   def initialize(order)
     @id = order['id']
@@ -18,5 +22,9 @@ class Order
            end
 
     (BigDecimal(rate) * @amount).round(2)
+  end
+
+  def amount=(amount)
+    @amount = BigDecimal(amount)
   end
 end

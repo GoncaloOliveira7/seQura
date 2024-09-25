@@ -1,5 +1,7 @@
 class Merchant
-  attr_reader :id, :reference, :email, :live_on, :disbursement_frequency, :minimum_monthly_fee
+  attr_reader :id, :reference, :email, :live_on, :minimum_monthly_fee
+
+  attr_accessor :disbursement_frequency
 
   def initialize(merchant)
     @id = merchant['id']
