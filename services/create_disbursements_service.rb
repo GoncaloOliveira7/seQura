@@ -34,7 +34,6 @@ class CreateDisbursementsService
       if @merchant.different_merchant?(@order)
         add_disbursement
         @merchant = Merchant.new(@merchants.shift)
-        @disbursement.merchant = @merchant
         start_new_month
         reset_disbursement
       end

@@ -29,7 +29,6 @@ class Disbursement
   end
 
   def create_csv_row(penalty_fee, start_of_the_month)
-    orders_amount = 
     [
       uniq_identifier,
       @merchant.reference,
