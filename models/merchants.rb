@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# EXPLANAITION
 class Merchant
   attr_reader :id, :reference, :email, :live_on, :minimum_monthly_fee
 

@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.25.1)
+    timecop (0.9.10)
 
 PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
   minitest (~> 5.25)
+  timecop (~> 0.9.10)
 
 BUNDLED WITH
    2.4.10

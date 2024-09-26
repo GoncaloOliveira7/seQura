@@ -17,7 +17,7 @@ describe Disbursement do
           'live_on' => '2024-09-20',
           'disbursement_frequency' => 'DAILY',
           'minimum_monthly_fee' => 0
-        }))
+        }), 1)
         order = OpenStruct.new({ created_at: Date.parse('2024-09-24') })
         subject.calculate_disbursement_range(order)
         _(subject.start_date).must_equal Date.parse('2024-09-24')
@@ -34,7 +34,7 @@ describe Disbursement do
           'live_on' => Date.parse('2023-05-20'),
           'disbursement_frequency' => 'WEEKLY',
           'minimum_monthly_fee' => 0
-        }))
+        }), 1)
         order = OpenStruct.new({ created_at: Date.parse('2024-09-24') })
         subject.calculate_disbursement_range(order)
         _(subject.start_date).must_equal Date.parse('2024-09-21')
@@ -51,7 +51,7 @@ describe Disbursement do
           'live_on' => Date.parse('2023-05-16'),
           'disbursement_frequency' => 'WEEKLY',
           'minimum_monthly_fee' => 0
-        }))
+        }), 1)
         order = OpenStruct.new({ created_at: Date.parse('2024-09-24') })
         subject.calculate_disbursement_range(order)
         _(subject.start_date).must_equal Date.parse('2024-09-24')
@@ -70,7 +70,7 @@ describe Disbursement do
           'live_on' => Date.parse('2023-05-16'),
           'disbursement_frequency' => 'INVALID',
           'minimum_monthly_fee' => 0
-        }))
+        }), 1)
         order = OpenStruct.new({ created_at: Date.parse('2024-09-24') })
         expect { subject.calculate_disbursement_range(order) }.must_raise ArgumentError
       end

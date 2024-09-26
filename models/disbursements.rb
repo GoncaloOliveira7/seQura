@@ -1,16 +1,12 @@
-# frozen_string_literal: true
-
-# coment
 class Disbursement
-  attr_reader :start_date, :end_date, :commission_fee, :disbursed_amount, :order_count
+  attr_reader :start_date, :end_date, :orders
 
   attr_accessor :merchant
 
-  def initialize(merchant)
+  def initialize(merchant, sequence)
     @merchant = merchant
-    @commission_fee = 0
-    @disbursed_amount = 0
-    @order_count = 0
+    @sequence = sequence
+    @orders = []
   end
 
   def calculate_disbursement_range(order)
@@ -29,22 +25,24 @@ class Disbursement
   end
 
   def add_order(order)
-    commission_fee = order.calculate_commission_fee
-    @commission_fee += commission_fee
-    @disbursed_amount += order.amount
-    @order_count += 1
+    @orders << order
   end
 
   def create_csv_row(penalty_fee, start_of_the_month)
+    orders_amount = 
     [
+      uniq_identifier,
       @merchant.reference,
-      @disbursed_amount.to_f,
-      @commission_fee.to_f,
+      @orders.sum(&:amount).to_f,
+      @orders.sum(&:calculate_commission_fee).to_f,
       penalty_fee.to_f,
-      @order_count,
+      @orders.size,
       @start_date,
       @end_date,
-      start_of_the_month
+      start_of_the_month,
+      @orders.map(&:id).join(' '),
+      @orders.map { |o| o.calculate_commission_fee.to_f }.join(' '),
+      @orders.map { |o| o.amount.to_f }.join(' ')
     ]
   end
 
@@ -55,6 +53,10 @@ class Disbursement
   end
 
   private
+
+  def uniq_identifier
+    (Time.now.to_i.to_s + @sequence.to_s.rjust(6, '0')).to_i.to_s(32)
+  end
 
   def calculate_disbursement_weekly_range(order)
     @start_date = if @merchant.live_on.wday == order.created_at.wday
